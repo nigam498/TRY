@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrieve Input Fields</title>
+<script>
+function retrieveInputFields() {
+    // URL to fetch input fields from
+    var url = "/inet/ent_multipay/CpBillPay?action=INIT&amp;wa_ref=pub_home_quicklink_pay_bills";
+
+    // Fetch content from the URL
+    fetch(url)
+    .then(response => response.text())
+    .then(data => {
+        // Create a temporary element to hold the fetched content
+        var tempElement = document.createElement('div');
+        tempElement.innerHTML = data;
+
+        // Extract input fields
+        var inputFields = tempElement.querySelectorAll('input');
+        
+        // Output the input fields
+        var inputFieldDetails = "";
+        inputFields.forEach(function(inputField) {
+            inputFieldDetails += "Name: " + inputField.name + ", Value: " + inputField.value + "<br>";
+        });
+        
+        // Display input fields
+        document.getElementById('inputFields').innerHTML = inputFieldDetails;
+    })
+    .catch(error => console.error('Error fetching input fields:', error));
+}
+</script>
+</head>
+<body>
+<h1>Click the link below to retrieve input fields:</h1>
+<a href="#" onclick="retrieveInputFields()">Retrieve Input Fields</a>
+<div id="inputFields"></div>
+</body>
+</html>
